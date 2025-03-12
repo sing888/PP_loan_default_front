@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8501
 
 # Command to run the app
-CMD ["streamlit", "run", "app.py"]
+CMD ["streamlit", "run", "main.py"]

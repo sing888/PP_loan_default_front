@@ -3,7 +3,7 @@ import requests
 import json
 
 # API endpoint
-url = 'https://pp-loan-default.onrender.com/predict/'
+url = 'https://loan-default-back-590586875127.asia-southeast1.run.app/'
 
 st.title("Loan Default Prediction")
 

@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 import json
 
-# API endpoint
-url = 'https://loan-default-back-590586875127.asia-southeast1.run.app/'
+# API endpourl 
+url = 'https://loan-default-back-590586875127.asia-southeast1.run.app/predict/'
 
 st.title("Loan Default Prediction")
 
@@ -43,7 +43,7 @@ st.markdown("""
 st.markdown('<p class="big-font">Enter Loan Information</p>', unsafe_allow_html=True)
 
 # Option to choose between Form Input, File Upload, or Text Input
-input_option = st.radio("Choose how to enter your information", ("Fill out a Form", "Upload a File", "Paste Text"))
+input_option = st.radio("Choose how to enter your information", ("Fill out a Form", "Paste Text"))
 
 # Default Text Input for JSON (for form)
 default_text = '''
@@ -93,7 +93,11 @@ if input_option == "Fill out a Form":
     mths_since_last_delinq = st.number_input('Months Since Last Payment Problem', value=0, min_value=0, step=1)
     purpose = st.selectbox('Purpose of the Loan', ['debt_consolidation', 'credit_card', 'home_improvement', 'major_purchase', 'small_business', 'car', 'wedding', 'medical', 'moving', 'vacation', 'house', 'renewable_energy', 'educational', 'other'])
 
-    model_option = st.radio("Choose model", ("Logistic Regression", "Catboost"))
+    st.markdown("""
+        <br/>
+        <h6>(Notice: First run may take a few seconds to start the server. Subsequent runs will be faster.)</h6>
+    """, unsafe_allow_html=True)
+
     # Prediction Button for Form Input
     if st.button('Predict'):
         payload = {
@@ -117,83 +121,47 @@ if input_option == "Fill out a Form":
             'mths_since_last_delinq': mths_since_last_delinq,
             'purpose': purpose
         }
-
-        response = None
-        if model_option == 'Logistic Regression':
-            response = requests.post(url=url+"lg", json=payload)
-        elif model_option == 'Catboost':
-            response = requests.post(url=url+"catboost", json=payload)
+        # print(f'{url + "catboost"}')
+        response = requests.post(url=url+"catboost", json=payload)
 
         if response.status_code == 200:
             result = response.json()
             prediction = result.get('predicted_status')
             probability = result.get('probability', 'N/A')
             if prediction == 1:
-                st.markdown(f'<div class="prediction-box prediction-default">Prediction: Default<br>Probability: {probability}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="prediction-box prediction-default">Prediction: Default<br>Confidence: {round((probability * 100),2)}%</div>', unsafe_allow_html=True)
             else:
-                st.markdown(f'<div class="prediction-box prediction-fully-paid">Prediction: Fully Paid<br>Probability: {probability}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="prediction-box prediction-fully-paid">Prediction: Fully Paid<br>Confidence: {round((probability * 100),2)}%</div>', unsafe_allow_html=True)
         else:
             st.error(f"Error: {response.status_code}")
             st.error(f"Response Content: {response.text}")
-
-# Handling File Upload Input
-elif input_option == "Upload a File":
-    st.subheader("Upload a JSON file")
-    uploaded_file = st.file_uploader("Upload a JSON file", type=["json"])
-    model_option = st.radio("Choose model", ("Logistic Regression", "Catboost"))
-    if uploaded_file is not None:
-        try:
-            # Read the uploaded file and parse it as JSON
-            file_content = uploaded_file.read().decode("utf-8")
-            payload = json.loads(file_content)
-
-            response = None
-            if model_option == 'Logistic Regression':
-                response = requests.post(url=url+"lg", json=payload)
-            elif model_option == 'Catboost':
-                response = requests.post(url=url+"catboost", json=payload)
-            if response.status_code == 200:
-                result = response.json()
-                prediction = result.get('predicted_status')
-                probability = result.get('probability', 'N/A')
-                if prediction == 1:
-                    st.markdown(f'<div class="prediction-box prediction-default">Prediction: Default<br>Probability: {probability}</div>', unsafe_allow_html=True)
-                else:
-                    st.markdown(f'<div class="prediction-box prediction-fully-paid">Prediction: Fully Paid<br>Probability: {probability}</div>', unsafe_allow_html=True)
-            else:
-                st.error(f"Error: {response.status_code}")
-                st.error(f"Response Content: {response.text}")
-        except json.JSONDecodeError:
-            st.error("The uploaded file is not a valid JSON file. Please check the file structure.")
-        except Exception as e:
-            st.error(f"Error processing the uploaded file: {e}")
 
 # Handling Text Input
 elif input_option == "Paste Text":
     st.subheader("Paste JSON Text")
     text_data = st.text_area("Paste your loan information here", value=default_text, height=300, max_chars=1500, key="text_input", help="Please paste the loan information in JSON format.")
 
-    model_option = st.radio("Choose model", ("Logistic Regression", "Catboost"))
+    st.markdown("""
+        <br/>
+        <h6>(Notice: First run may take a few seconds to start the server. Subsequent runs will be faster.)</h6>
+    """, unsafe_allow_html=True)
+
     # Prediction Button for Text Input
     if st.button('Predict'):
         if text_data:
             try:
                 payload = json.loads(text_data)  # Convert string to JSON object
-                
-                # Send the request to the model for prediction
-                response = None
-                if model_option == 'Logistic Regression':
-                    response = requests.post(url=url+"lg", json=payload)
-                elif model_option == 'Catboost':
-                    response = requests.post(url=url+"catboost", json=payload)
+                # print(f'{url + "catboost"}')
+                response = requests.post(url=url+"catboost", json=payload)
+
                 if response.status_code == 200:
                     result = response.json()
                     prediction = result.get('predicted_status')
                     probability = result.get('probability', 'N/A')
                     if prediction == 1:
-                        st.markdown(f'<div class="prediction-box prediction-default">Prediction: Default<br>Probability: {probability}</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div class="prediction-box prediction-default">Prediction: Default<br>Confidence: {round((probability * 100),2)}%</div>', unsafe_allow_html=True)
                     else:
-                        st.markdown(f'<div class="prediction-box prediction-fully-paid">Prediction: Fully Paid<br>Probability: {probability}</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div class="prediction-box prediction-fully-paid">Prediction: Fully Paid<br>Confidence: {round((probability * 100),2)}%</div>', unsafe_allow_html=True)
                 else:
                     st.error(f"Error: {response.status_code}")
                     st.error(f"Response Content: {response.text}")
@@ -203,3 +171,5 @@ elif input_option == "Paste Text":
                 st.error(f"Error processing the input: {e}")
         else:
             st.warning("Please enter some data to predict.")
+
+    

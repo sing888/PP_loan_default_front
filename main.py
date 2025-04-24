@@ -5,6 +5,57 @@ import json
 # API endpourl 
 url = 'https://loan-default-back-590586875127.asia-southeast1.run.app/predict/'
 
+# Floating full-width header
+st.markdown("""
+    <style>
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 15px 30px;
+            border-bottom: 2px solid #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 999;
+        }
+        .main-header img {
+            height: 40px;
+        }
+        .main-header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #4CAF50;
+        }
+        .main-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 12px 30px;
+            font-size: 14px;
+        }
+        .stApp {
+            padding-top: 80px;  /* push content down from header */
+            padding-bottom: 60px; /* push content up from footer */
+        }
+    </style>
+
+    <div class="main-header">
+        <div>
+            <img src="https://rupp.edu.kh/news/news_image/69s.jpg" alt="Logo">
+            <img src="https://scontent.fpnh1-2.fna.fbcdn.net/v/t39.30808-6/398166518_368324865719303_7129717272320591220_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=NkkKS0Zj5oQQ7kNvwE3hsT1&_nc_oc=Adldng92YkQ588ts8Rv5Le3gssxGz4tVWb7SCMlUxbP1HOPsTpDnVYRPi6JrSrQ-rUo&_nc_zt=23&_nc_ht=scontent.fpnh1-2.fna&_nc_gid=HlLYP1Two5o4FdWvomzr6Q&oh=00_AfFwC_aWfdR2GurIvcYo9DFcaWMeipMMvwh-MhsK1Gx79w&oe=68102BB6 " alt="Logo">   
+        </div>
+        <h1>Loan Default Predictor</h1>
+    </div>
+""", unsafe_allow_html=True)
+
+
 st.title("Loan Default Prediction")
 
 # Custom Styling for Streamlit
@@ -172,4 +223,13 @@ elif input_option == "Paste Text":
         else:
             st.warning("Please enter some data to predict.")
 
-    
+# Footer
+st.markdown("""
+    <hr style="margin-top: 50px;"/>
+    <div style="text-align: center; font-size: 14px; color: #888;">
+        © 2025 Loan Default Predictor</br>RUPP - Department of Data Science and Engineering<br>
+        Developed by Doung Sing · Model: CatBoost
+    </div>
+""", unsafe_allow_html=True)
+
+

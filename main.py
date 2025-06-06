@@ -33,7 +33,7 @@ st.markdown("""
     <div class="main-header">
         <div>
             <img src="https://rupp.edu.kh/news/news_image/69s.jpg" alt="Logo">
-            <img src="https://scontent.fpnh1-2.fna.fbcdn.net/v/t39.30808-6/398166518_368324865719303_7129717272320591220_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=NkkKS0Zj5oQQ7kNvwE3hsT1&_nc_oc=Adldng92YkQ588ts8Rv5Le3gssxGz4tVWb7SCMlUxbP1HOPsTpDnVYRPi6JrSrQ-rUo&_nc_zt=23&_nc_ht=scontent.fpnh1-2.fna&_nc_gid=HlLYP1Two5o4FdWvomzr6Q&oh=00_AfFwC_aWfdR2GurIvcYo9DFcaWMeipMMvwh-MhsK1Gx79w&oe=68102BB6" alt="Logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfLSZlLJ2MjwZjHvCl5O1OCqf1YqiC2cfYKQ&s" alt="Logo">
         </div>
         <h1>Loan Default Prediction</h1>
     </div>

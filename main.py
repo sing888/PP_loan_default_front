@@ -196,9 +196,9 @@ elif input_option == "Paste Text":
                     prediction = result.get('predicted_status')
                     probability = result.get('probability', 'N/A')
                     if prediction == 1:
-                        st.markdown(f'<div class="prediction-box prediction-default">Prediction: Default<br>Confidence: {round((probability * 100),2)}%</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div class="prediction-box prediction-default">Prediction: Default<br>Confidence: {round(100 - (probability * 100),2)}%</div>', unsafe_allow_html=True)
                     else:
-                        st.markdown(f'<div class="prediction-box prediction-fully-paid">Prediction: Fully Paid<br>Confidence: {round((probability * 100),2)}%</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div class="prediction-box prediction-fully-paid">Prediction: Fully Paid<br>Confidence: {round(100 - (probability * 100),2)}%</div>', unsafe_allow_html=True)
                 else:
                     st.error(f"Error: {response.status_code}")
                     st.error(f"Response Content: {response.text}")
